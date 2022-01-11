@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            box-sizing: border-box;
+            font-family: 'Raleway', sans-serif;
+            font-size: 16px;
+        }
+
+        *,
+        *:after,
+        *:before{
+            box-sizing: inherit;
+        }
+
+        a {
+            color: #01579b;
+            transition: all .3s ease-out;
+        }
+
+        a:hover{
+            opacity: .75;
+        }
+
+        img{
+            max-width: 100%;
+            height: auto;
+        }
+
+        h1{
+            text-align: center;
+        }
+
+        hr{
+            border: thin solid #01579b;
+            margin: 3rem auto;
+            width: 80%;
+        }
+
+        .site {
+            margin: 1rem auto;
+            padding: 1rem;
+            max-width: 50%;
+            text-align: center;
+        }
+
+        
+        .post {
+            margin: 1rem auto;
+            padding: 1rem;
+            border-radius: .5rem;
+            max-width: 80%;
+            text-align: center;
+            background-color: #eceff1;
+        }
+        
+        .post-author img {
+            border-radius: 50%;
+        }
+
+        .post-date{
+            margin: 1rem auto;
+            display: block;
+        }
+
+
+        .post-excerpt,
+        .post-categories,
+        .post-tags,
+        .post-content{
+            text-align: left;
+        }
+
+
+        .post-content summary {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .post-content>article {
+            padding: 1rem;
+            background-color: #e3f2fd;
+        }
+
+
+        .post-content img {
+            display: block;
+            margin: auto;
+        }
+
+
+        .loader{
+            display: none;
+            margin: 2rem auto;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <h1>Wordpress API REST</h1>
+    <article id="site" class="site"></article>
+    <section id="posts" class="posts"></section>
+    <img class="loader" src="loader.svg" alt="loading...">
+    <template id="post-template">
+        <article class="post">
+            <img class="post-image">
+            <aside>
+                <h2 class="post-title"></h2>
+                <figure class="post-author"></figure>
+                <small class="post-date"></small>
+                <a class="post-link" target="_blank">Ver publicacion original</a>
+                <p class="post-excerpt"></p>
+                <div class="post-categories"></div>
+                <div class="post-tags"></div>
+                <details class="post-content">
+                    <summary>Ver contenido de la publicacion</summary>
+                    <article></article>
+                </details>
+            </aside>
+        </article>
+        <hr>
+
+
+    </template>
+
+    <script>
+        /* para que puedas crear un frontend y consumir un sitio en wordpress
+        este debe tener activo los permisos de consumir como API por GET u otros metodos */
+
+
+        /* fetch('https://malvestida.com/wp-json/wp/v2/pages')
+        .then(res => res.ok ? res.json() : Promise.reject(res))
+        .then(json => {
+            console.log(json)
+        }) */
+
+
+
+        const d = document,
+            w = window,
+            $site = d.getElementById('site'),
+            $posts = d.getElementById('posts'),
+            $loader = d.querySelector('.loader'),
+            $template = d.getElementById('post-template').content,
+            $fragment = d.createDocumentFragment(),
+            DOMAIN = 'https://css-tricks.com',
+            SITE = `${DOMAIN}/wp-json`,
+            API_WP = `${SITE}/wp/v2`,
+
+            /* se agrega el parametro _embed para que devuelva los id y 
+            tambien los links de cosas como imagenes y otra info adicional */
+            POSTS = `${API_WP}/posts?_embed`,
+            PAGES = `${API_WP}/pages`,
+            CATEGORIES = `${API_WP}/categories`;
+
+            /* pagina en la que quieres comenzar
+            posts por paginas */
+        let page = 1,
+            perPage = 5;
+
+        
+        function getSiteData() {
+            fetch(SITE)
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(json => {
+                console.log(json);
+
+                $site.innerHTML = `
+                <h3>Sitio web</h3>
+                <h2>
+                    <a href="${json.url}" target="_blank">${json.name}</a>
+                </h2>
+                <p>${json.description}</p>
+                <p>${json.timezone_string}</p>
+                `
+            })
+            .catch(err =>{
+                console.log(err)
+                let message = err.statusText || 'Ocurrio un error';
+                $site.innerHTML = `Error ${err.status}: ${message}`;
+            });
+        }
+        
+
+
+        function getPosts() {
+            $loader.style.display = 'block';
+            fetch(`${POSTS}&page=${page}&per_page=${perPage}`)
+            .then(res => res.ok ? res.json() : Promise.reject(res))
+            .then(json => {
+                console.log(json);
+
+
+                
+                
+                json.forEach(el => {
+
+                    /* por cada taxonomia de tu documento wordpress, creas un elemenot para 
+                    agregarles el array de su contenido propio */
+                    let categories = '',
+                        tags = '';
+
+                    el._embedded['wp:term'][0].forEach(el => categories += `<li>${el.name}</li>`)
+                    el._embedded['wp:term'][1].forEach(el => tags += `<li>${el.name}</li>`)
+
+                    /* ya que usar : da error, lo hacemos con notacion de objetos
+                    adicional, se coloca [0] para seleccionar la primera imagen
+                    en caso de haber varias */
+                    $template.querySelector('.post-image').src = el._embedded['wp:featuredmedia'][0].source_url;
+                    $template.querySelector('.post-image').alt = el.title.rendered;
+                    $template.querySelector('.post-title').innerHTML = el.title.rendered
+                    $template.querySelector('.post-author').innerHTML = `
+                    <img src="${el._embedded.author[0].avatar_urls['48']}" alt="${el._embedded.author[0].name}">
+                    <figcaption>${el._embedded.author[0].name}</figcaption>
+                    `;
+                    $template.querySelector('.post-date').innerHTML = new Date(el.date).toLocaleString()
+                    $template.querySelector('.post-link').href = el.link
+                    $template.querySelector('.post-excerpt').innerHTML = el.excerpt.rendered.replace('[&hellip;]', '...')
+                    
+                    $template.querySelector('.post-categories').innerHTML = `
+                    <p>Categorias:</p>
+                    <ul>${categories}</ul>
+                    `;
+
+                    $template.querySelector('.post-tags').innerHTML = `
+                    <p>Etiquetas:</p>
+                    <ul>${tags}</ul>
+                    `;
+
+                    $template.querySelector('.post-content > article').innerHTML = el.content.rendered
+
+                    let $clone = d.importNode($template, true);
+                    $fragment.appendChild($clone);
+                });
+
+
+                $posts.appendChild($fragment)
+                $loader.style.display = 'none';
+            })
+            .catch(err =>{
+                console.log(err)
+                let message = err.statusText || 'Ocurrio un error';
+                $posts.innerHTML = `Error ${err.status}: ${message}`;
+
+                /* ocultamos el loader aqui y no arriba ya que primero se carga la 
+                informacion del sitio y despues los posts, de hacerlo al reves
+                desapareceria el loader y quedaria la pantalla en blanco esperando
+                que los posts aparezcan */
+                $loader.style.display = 'none';
+            });
+
+        }
+
+        d.addEventListener('DOMContentLoaded', e=> {
+            getSiteData();
+            getPosts();
+        });
+        
+/* sumamos lo alejado del tope, el tamaño visible de pantalla contra el
+tamaño total de scroll que se puede hacer */
+        w.addEventListener('scroll', e => {
+            const {scrollTop, clientHeight, scrollHeight} = d.documentElement;
+
+
+            if(scrollTop + clientHeight >= scrollHeight) {
+                /* le sumamos este parametro para que no repita
+                las mismas5 publicaciones */
+                page++;
+                getPosts();
+            }
+        });
+    </script>
+</body>
+</html>

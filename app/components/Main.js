@@ -1,4 +1,4 @@
-import { SearchForm } from "./SearchForm.js"
+import { SearchForm } from "./searchForm.js"
 export function Main() {
     const $main = document.createElement('main'),
         $header = document.querySelector('header');

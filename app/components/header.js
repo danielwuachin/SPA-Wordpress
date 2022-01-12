@@ -1,6 +1,6 @@
-import { Menu } from "./Menu.js"
+import { Menu } from "./menu.js"
 
-import { Title } from "./Title.js"
+import { Title } from "./title.js"
 
 
 export function Header() {

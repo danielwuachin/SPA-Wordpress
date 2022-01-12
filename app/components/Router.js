@@ -11,8 +11,6 @@ export async function Router() {
         $main = d.getElementById('main')
 
     let {hash} = location;
-    console.log(hash)
-
 
     /* to change the view */
     $main.innerHTML = '';
@@ -21,16 +19,13 @@ export async function Router() {
         await ajax({
             url: api.POSTS,
             cbSuccess: (posts) => {
-                console.log(posts);
                 let html = '';
     
                 posts.forEach((post) => html += PostCard(post));
-                
                 $main.innerHTML = html;
             }
         });
     }else if (hash.includes('#/search')){
-        console.log('seccion del buscador')
 
         let query = localStorage.getItem('wpSearch');
 
@@ -42,7 +37,6 @@ export async function Router() {
         await ajax({
             url: `${api.SEARCH}${query}`,
             cbSuccess: (search) => {
-                console.log(search);
                 let html = '';
     
                 if(search.lenght === 0) {
@@ -54,34 +48,23 @@ export async function Router() {
                 }else {
                     search.forEach((post) => html += SearchCard(post));
                 }
-                
                 $main.innerHTML = html;
             }
         });
 
 
     }else if(hash === '#/contacto'){
-
-        console.log('seccion de contacto')
         $main.appendChild(ContactForm());
         
-
-
     }else {  
-        console.log(`${api.POST}/${localStorage.getItem('wpPostId')}`)
-
         await ajax({
             url: `${api.POST}/${localStorage.getItem('wpPostId')}`,
             cbSuccess: (post) => {
-                console.log(post);
 
                 $main.innerHTML= Post(post)
             }
         });
     }
 
-
     d.querySelector('.loader').style.display = 'none';
-
-    
 }

@@ -33,8 +33,6 @@ export async function InfiniteScroll() {
             await ajax({
                 url: apiURL,
                 cbSuccess: (posts) => {
-                    console.log(posts)
-                    
                     let html = '';
                     
                     posts.forEach(post => html += Component(post));

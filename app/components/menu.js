@@ -6,9 +6,9 @@ export function Menu () {
     <span>-</span>
     <a href='#/search'>Search</a>
     <span>-</span>
-    <a href='#/contacto'>Contacto</a>
+    <a href='#/contacto'>Contact</a>
     <span>-</span>
-    <a href='https://aprendejavascript.org/' target='_blank' rel='noopener'>Learn JS</a>
+    <a href='https://github.com/danielwuachin' target='_blank' rel='noopener'>Visit my GitHub</a>
     `;
     return  $menu;
 }

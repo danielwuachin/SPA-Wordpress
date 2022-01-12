@@ -121,7 +121,7 @@ export function ContactForm() {
     `;
 
     $form.innerHTML = `
-    <legend>Envianos tu formulario</legend>
+    <legend>Contactame!</legend>
     <input type="text" name="name" placeholder="Escribe tu nombre" title="Nombre solo recibe letras y espacios en blanco" 
     pattern="[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$" required>
     <input type="email" name="email" placeholder="Escribe tu email"

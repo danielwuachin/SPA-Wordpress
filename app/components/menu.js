@@ -8,7 +8,7 @@ export function Menu () {
     <span>-</span>
     <a href='#/contacto'>Contact</a>
     <span>-</span>
-    <a href='#/page'>Change page</a>
+    <a href='#/page'>Change WP blog</a>
     
     
     `;

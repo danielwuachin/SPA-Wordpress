@@ -1,14 +1,29 @@
 export function SearchForm() {
     const $form = document.createElement('form'),
         d = document,
+        $label = document.createElement('label'),
+        $span = document.createElement('span'),
         $input = document.createElement('input');
 
     $form.classList.add('search-form','header-item')
+
+    $label.classList.add('input');
+
+    $span.classList.add('input__label');
+    $span.textContent = 'Search'
+
+    $input.classList.add('input__field');
     $input.name = 'search';
     $input.type = 'search';
-    $input.placeholder = 'Search...';
+    $input.placeholder = ' ';
     $input.autocomplete = 'off';
-    $form.appendChild($input);
+    
+
+    $label.appendChild($input);
+
+    $label.appendChild($span);
+    
+    $form.appendChild($label);
 
     if (location.hash.includes('#/search')){
         $input.value = localStorage.getItem('wpSearch'); 

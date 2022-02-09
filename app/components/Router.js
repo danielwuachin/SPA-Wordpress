@@ -43,7 +43,7 @@ export async function Router() {
                 if(search.lenght === 0) {
                     html = `
                     <p class='error'>
-                        No existen resultados de busqueda para el termino <mark>${query}</mark>
+                    No results found to <mark>${query}</mark> 
                     </p>
                     `;
                 }else {

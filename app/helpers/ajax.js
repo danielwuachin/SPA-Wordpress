@@ -9,7 +9,7 @@ export async function ajax(props) {
     .then(res => res.ok ? res.json() : Promise.reject(res))
     .then(json => cbSuccess(json))
     .catch(err => {
-        let message = err.statusText || 'Ocurrio un error al acceder a la API';
+        let message = err.statusText || 'Error when try to use te API. Maybe the name has not correctly spelled or have CORS policy active ';
 
         document.getElementById('main').innerHTML = `<div class="error">
         <p>Error ${err.status}: ${message}</p>

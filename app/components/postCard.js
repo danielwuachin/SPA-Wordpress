@@ -15,7 +15,7 @@ export function PostCard(props) {
         <h2>${title.rendered}</h2>
         <p>
             <time datetime='${date}'>${dateFormat}</time>
-            <a href='#/${slug}' data-id='${id}'>Ver publicacion</a>
+            <a href='#/${slug}' data-id='${id}'>See post</a>
         </p>
     </article>
     `;

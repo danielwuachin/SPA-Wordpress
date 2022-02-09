@@ -1,6 +1,7 @@
 import { ajax } from '../helpers/ajax.js'
 import api from '../helpers/wp_api.js'
 import { ContactForm } from './ContactForm.js';
+import { PageForm } from './pageForm.js';
 import { Post } from './Post.js';
 import { PostCard } from './postCard.js';
 import { SearchCard } from './SearchCard.js';
@@ -56,7 +57,12 @@ export async function Router() {
     }else if(hash === '#/contacto'){
         $main.appendChild(ContactForm());
         
-    }else {  
+    }else if(hash === '#/page'){
+        
+        $main.appendChild(PageForm());
+    }
+    
+    else {  
         await ajax({
             url: `${api.POST}/${localStorage.getItem('wpPostId')}`,
             cbSuccess: (post) => {

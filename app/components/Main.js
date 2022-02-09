@@ -5,8 +5,7 @@ export function Main() {
     $main.id = 'main';
 
 
-    if(!location.hash.includes('#/search')) $main.classList.add('grid-fluid');
-    else $header.appendChild(SearchForm());
-    
+    if(location.hash.includes('#/search')) $header.appendChild(SearchForm());
+    else $main.classList.add('grid-fluid'); 
     return $main;
 }

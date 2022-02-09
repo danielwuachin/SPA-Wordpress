@@ -33,6 +33,14 @@ export function ContactForm() {
     *::before{
         box-sizing: inherit;
     }
+
+    h2{
+        text-align: center;
+    }
+
+    h4{
+        text-align: center; 
+    }
     
     
     .contact-form {
@@ -121,14 +129,18 @@ export function ContactForm() {
     `;
 
     $form.innerHTML = `
-    <legend>Contactame!</legend>
-    <input type="text" name="name" placeholder="Escribe tu nombre" title="Nombre solo recibe letras y espacios en blanco" 
+
+    <h2><a href='https://github.com/danielwuachin' target='_blank' rel='noopener'>Visit my GitHub</a></h2>
+
+    <h4>or</h4>
+    <legend>Contact me!</legend>
+    <input type="text" name="name" placeholder="Your name" title="Only letters and spaces" 
     pattern="[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$" required>
-    <input type="email" name="email" placeholder="Escribe tu email"
-    title="Email incorrecto" pattern="^[a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,15})$" required>
-    <input type="text" name="subject" placeholder="Asunto a tratar" title="El asunto es requerido" required >
-    <textarea name="comments" cols="50" rows="5" placeholder="Escribe tus comentarios"
-    required data-pattern="^.{1,255}$" title="Tu comentario no debe exceder los 255 caracteres"></textarea>
+    <input type="email" name="email" placeholder="Your email"
+    title="wrong email" pattern="^[a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,15})$" required>
+    <input type="text" name="subject" placeholder="Why you contact me" title="This is requeried" required >
+    <textarea name="comments" cols="50" rows="5" placeholder="What you can tell me"
+    required data-pattern="^.{1,255}$" title="Max of 255 characters"></textarea>
     <input type="submit" value="Enviar">
 
     <div class="contact-form-loader none">

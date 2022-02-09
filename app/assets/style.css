@@ -1,3 +1,12 @@
+:root{
+    --hero-image: url('code.jpg');
+    --color-light: white;
+    --color-dark: #212121;
+    --color-signal: #fab700; 
+}
+
+
+
 html {
     box-sizing: border-box;
     font-family: sans-serif;
@@ -14,12 +23,19 @@ html {
 body{
     margin: 0;
     overflow-x: hidden;
+    background-color: black;
+    background-image: var(--hero-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 
 a {
-    color: #01579b;
+    color: orange;
     transition: color 0.3s ease;
+    text-decoration: none;
 }
 
 
@@ -27,9 +43,16 @@ a:hover {
     color: #00b0ff;
 }
 
-h1 {
+
+h2 > a{
+    color: orange !important;
+}
+
+h3{
+    margin: 0 auto;
     text-align: center;
 }
+
 
 img {
     max-width: 100%;
@@ -75,22 +98,44 @@ img {
     padding: 0.5rem;
     position: sticky;
     top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow: 0px -3px 19px rgb(92, 143, 145);
+    background: rgb(189,189,189);
+    background: linear-gradient(225deg, rgba(189,189,189,1) 0%, rgb(110, 110, 110) 10%, rgba(19,10,0,1) 80%);
+}
+
+
+.header-item{
+    min-width: 49%;
+    margin: 1rem auto;
     text-align: center;
-    background-color: #fff;
+}
+
+.header a {
+    font-weight: 600;
+    color: lightgrey;
+}
+
+.header a:hover{
+    color: orange;
 }
 
 
 
+
+
+
+
 .grid-fluid{
+    
     margin: 1rem auto;
     max-width: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.header> *{
-    margin: 1rem auto;
-}
 
 .loader{
     margin: 1rem auto;
@@ -100,11 +145,24 @@ img {
 }
 
 
+
+.page-section{
+    background: rgb(174,196,235);
+    background: linear-gradient(180deg, rgba(174,196,235,1) 7%, rgba(218,218,218,1) 86%);
+    border-radius: 5px;
+    padding: 1.3rem;
+}
+
+
+
+
 .post-card {
     margin: 1rem auto;
     padding: 1rem;
     width: 80%;
-    background-color: #eceff1;
+    border-radius: 5px;
+    background: rgb(174,196,235);
+    background: linear-gradient(180deg, rgba(174,196,235,1) 7%, rgba(218,218,218,1) 86%);
 }
 
 
@@ -118,7 +176,9 @@ img {
     margin: 1rem auto;
     padding: 1rem auto;
     width: 80%;
-    background-color: #eceff1;
+    border-radius: 5px;
+    background: rgb(174,196,235);
+    background: linear-gradient(180deg, rgba(174,196,235,1) 7%, rgba(218,218,218,1) 86%);
 }
 
 
@@ -155,4 +215,23 @@ img {
     margin: auto;
     display: block;
     max-width: 100%;
+}
+
+
+
+#root{
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.30)
+}
+
+
+
+
+.search-form > input{
+    text-align: center;
+    width: 30%;
+    height: 2rem;
+    border-radius: 3px;
+    border: 1px solid orange;
+    margin: inline 10px;
 }

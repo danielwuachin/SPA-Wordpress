@@ -1,4 +1,10 @@
-const NAME = "css-tricks",
+let NAME = "";
+
+    if(!localStorage.getItem('wpPage')) NAME = 'css-tricks';
+    else NAME = localStorage.getItem('wpPage');
+
+
+const
     DOMAIN = `https://${NAME}.com`,
     SITE = `${DOMAIN}/wp-json`,
     API_WP = `${SITE}/WP/V2`,
@@ -20,5 +26,5 @@ export default {
     SEARCH, 
     CATEGORIES,
     PER_PAGE,
-    page
+    page,
 }

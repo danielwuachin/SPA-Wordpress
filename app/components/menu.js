@@ -1,6 +1,6 @@
 export function Menu () {
     const $menu = document.createElement('nav');
-    $menu.classList.add('menu')
+    $menu.classList.add('menu', 'header-item')
     $menu.innerHTML = `
     <a href='#/'>Home</a>
     <span>-</span>
@@ -8,7 +8,9 @@ export function Menu () {
     <span>-</span>
     <a href='#/contacto'>Contact</a>
     <span>-</span>
-    <a href='https://github.com/danielwuachin' target='_blank' rel='noopener'>Visit my GitHub</a>
+    <a href='#/page'>Change page</a>
+    
+    
     `;
     return  $menu;
 }

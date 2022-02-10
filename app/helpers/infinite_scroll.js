@@ -1,3 +1,4 @@
+import { Observer } from "../components/observer.js";
 import { PostCard } from "../components/postCard.js";
 import { SearchCard } from "../components/SearchCard.js";
 import { ajax } from "./ajax.js";
@@ -41,6 +42,8 @@ export async function InfiniteScroll() {
                     
                     d.getElementById('main').insertAdjacentHTML('beforeend', html);
                     d.querySelector('.loader').style.display = 'none';
+
+                    Observer('.post-card')
                 }
             })
         }

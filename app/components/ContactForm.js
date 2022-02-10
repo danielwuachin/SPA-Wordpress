@@ -5,146 +5,42 @@ export function ContactForm() {
 
     $form.classList.add('contact-form');
 
-    $styles.innerHTML = `
-    :root{
-        --font: sans-serif;
-        --font-size: 16px;
-        --yellow-color: #f7df1e;
-        --dark-color: #222;
-        --yellow-color-85: rgba(247,222,30, 0.85);
-        --dark-color-85: rgba(34, 34, 34, .85);
-        --container-width: 1200px;
-    }
-    
-    
-    
-    
-    /*-------------reset----------------*/
-    html{
-        box-sizing: border-box;
-        font-family: sans-serif;
-        /* se establece en 16´x para trabajar con rems */
-        font-size: 16px;
-    }
-    
-    /* esto es para que el contenido generado dinamicamente se adate al tamaño del contenido de la etiqueta html creada anteriormente */
-    *,
-    *::after,
-    *::before{
-        box-sizing: inherit;
-    }
-
-    h2{
-        text-align: center;
-    }
-
-    h4{
-        text-align: center; 
-    }
-    
-    
-    .contact-form {
-        --form-ok-color: #4caf50;
-        --form-error-color: #f44836;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-    }
-    
-    .contact-form > * {
-        padding: 0.5rem;
-        margin: 1rem auto;
-        display: block;
-        width: 100%;
-    }
-    
-    .contact-form textarea {
-        resize: none;
-    }
-    
-    .contact-form legend,
-    .contact-form-response{
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-align: center;
-    }
-    
-    .contact-form input,
-    .contact-form textarea{
-        font-size: 1rem;
-        font-family: sans-serif;
-    }
-    
-    .contact-form input[type="submit"]{
-        width: 50%;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    
-    .contact-form *::placeholder{
-        color: #000;
-    }
-    
-    .contact-form [required]:valid {
-        border: thin solid var(--form-ok-color);
-    }
-    
-    .contact-form [required]:invalid {
-        border: thin solid var(--form-error-color);
-    }
-    
-    .contact-form-error{
-        margin-top: -1rem;
-        font-size: 80%;
-        background-color: var(--form-error-color);
-        color: #fff;
-        transition: all 800ms ease;
-    }
-    
-    .contact-form-error.is-active{
-        display: block;
-        animation: show-message 1s 1 normal 0s ease-out both;
-    }
-    
-    .contact-form-loader{
-        text-align: center;
-    }
-    
-    .none {
-        display: none;
-    }
-    
-    
-    @keyframes show-message {
-        0% {
-            visibility:hidden;
-            opacity: 1;
-        }
-    
-        100% {
-            visibility: visible;
-            opacity: 1;
-        }
-    }
-    `;
 
     $form.innerHTML = `
 
     <h2><a href='https://github.com/danielwuachin' target='_blank' rel='noopener'>Visit my GitHub</a></h2>
 
     <h4>or</h4>
-    <legend>Contact me!</legend>
-    <input type="text" name="name" placeholder="Your name" title="Only letters and spaces" 
-    pattern="[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$" required>
-    <input type="email" name="email" placeholder="Your email"
-    title="wrong email" pattern="^[a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,15})$" required>
-    <input type="text" name="subject" placeholder="Why you contact me" title="This is requeried" required >
-    <textarea name="comments" cols="50" rows="5" placeholder="What you can tell me"
-    required data-pattern="^.{1,255}$" title="Max of 255 characters"></textarea>
+    <h3>Contact me!</h3>
+    <label class='input'>
+        <input type="text" class='input__field' name="name" placeholder=" " title="Only letters and spaces" pattern="[a-zA-ZñÑáÁéÉíÍóÓúÚ\\s]+$" required></input>
+        <span class='input__label'>Name</span>
+    </label>
+    
+    <br>
+    <label class='input input-1'>
+        <input type="email" class='input__field' name="email" placeholder=" " title="wrong email" pattern="^[a-z0-9]+(\\.[_a-z0-9]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,15})$" required></input>
+        <span class='input__label'>Email</span>
+    </label>
+
+    <br>
+    <label class='input'>
+        <input type="text" class='input__field' name="subject" placeholder=" " title="This is requeried" required ></input>
+        <span class='input__label'>Title</span>
+    </label>
+    
+    <br>
+    <label class='input'>
+    <textarea name="comments" class='input__field' cols="50" rows="5" placeholder=" " required data-pattern="^.{1,255}$" title="Max of 255 characters"></textarea>
+        <span class='input__label'>Message</span>
+    </label>
+
+
+    <br>
     <input type="submit" value="Enviar">
 
     <div class="contact-form-loader none">
-        <img src="app/assets/loader.svg" alt="Cargando">
+        <img src="app/assets/circles.svg" alt="Cargando">
     </div>
 
     <div class="contact-form-response none">
@@ -158,11 +54,12 @@ export function ContactForm() {
             $inputs = d.querySelectorAll('.contact-form [required]');
 
         $inputs.forEach(input => {
-            const $span = d.createElement("span");
+            const $span = d.createElement("span"),
+                $label = input.parentNode;
             $span.id = input.name;
             $span.textContent = input.title;
-            $span.classList.add('contact-form-error','none');
-            input.insertAdjacentElement('afterend', $span);
+            $span.classList.add('contact-form-error');
+            $label.insertAdjacentElement('beforeend', $span);
         });
 
         d.addEventListener('keyup', (e)=> {
@@ -192,7 +89,7 @@ export function ContactForm() {
         d.addEventListener('submit', (e) => {
             /* quitamos default para evitar que envie algo y poder usar ajax */
             e.preventDefault()
-            alert('Enviando...')
+
 
             const $loader= d.querySelector('.contact-form-loader'),
                 $response = d.querySelector('.contact-form-response');
@@ -218,7 +115,7 @@ export function ContactForm() {
                 $form.reset();
             })
             .catch(err => {
-                let message = err.statusText || 'Ocurrio un error al enviar, intenta nuevamente';
+                let message = err.statusText || 'Please, refresh and send again';
                 $response.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
             })
             .finally(() => {

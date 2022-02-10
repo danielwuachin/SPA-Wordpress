@@ -1,6 +1,7 @@
 import { ajax } from '../helpers/ajax.js'
 import api from '../helpers/wp_api.js'
 import { ContactForm } from './ContactForm.js';
+import { Observer } from './observer.js';
 import { PageForm } from './pageForm.js';
 import { Post } from './Post.js';
 import { PostCard } from './postCard.js';
@@ -17,6 +18,8 @@ export async function Router() {
     $main.innerHTML = '';
 
     if(!hash || hash === '#/'){
+        let $home = document.querySelector('.menu-home');
+        $home.style.color = "#ffa500";
         await ajax({
             url: api.POSTS,
             cbSuccess: (posts) => {
@@ -24,10 +27,15 @@ export async function Router() {
     
                 posts.forEach((post) => html += PostCard(post));
                 $main.innerHTML = html;
+                
+                
+                Observer('.post-card')
+
             }
         });
     }else if (hash.includes('#/search')){
-
+        let $search = document.querySelector('.menu-search');
+        $search.style.color = "#ffa500";
         let query = localStorage.getItem('wpSearch');
 
         if(!query) {
@@ -50,16 +58,25 @@ export async function Router() {
                     search.forEach((post) => html += SearchCard(post));
                 }
                 $main.innerHTML = html;
+
+                Observer('.post-card')
             }
         });
 
 
     }else if(hash === '#/contacto'){
+        let $contact = document.querySelector('.menu-contact');
+        $contact.style.color = "#ffa500";
         $main.appendChild(ContactForm());
+
+        Observer('.contact-form')
         
     }else if(hash === '#/page'){
-        
+        let $page = document.querySelector('.menu-page');
+        $page.style.color = "#ffa500";
         $main.appendChild(PageForm());
+        
+        Observer('.page-section')
     }
     
     else {  

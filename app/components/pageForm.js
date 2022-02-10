@@ -57,8 +57,10 @@ export function PageForm() {
     e.preventDefault();
     localStorage.setItem("wpPage", e.target.search.value);
     setTimeout(() => {
-      location.href = "http://127.0.0.1:5500/index.html#/";
-      location.reload();
+      location.href = "http://127.0.0.1:5500/index.html#/"; 
+      setTimeout(() => {
+        location.reload();
+      }, 10);
     }, 50);
   });
 

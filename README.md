@@ -28,12 +28,14 @@ An example of how to use whatever Wordpress blog* like an Backend API REST and u
 
 <br>
 
+
+## Link to the page
+
+- <a href="https://danielwuachin.github.io/SPA-Wordpress/" target="_blank" rel="noopened">Click me!🌎</a>
+
+<br>
+
 Enjoy 💙
-
-## Link to te page
-
-- [SPA with wathever WordPress blog][2]
 
 [1]: https://css-tricks.com/
 
-[2]: https://danielwuachin.github.io/SPA-Wordpress/
